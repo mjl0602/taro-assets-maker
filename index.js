@@ -31,6 +31,8 @@ async function main(args) {
 
 main(process.argv);
 
+let isWindows = os.type() == 'Windows_NT';
+
 
 async function initTaro() {
   let cmdPath = process.cwd();
@@ -74,12 +76,16 @@ async function makeTaro() {
   let cmdPath = process.cwd();
   let assetDicPath = `${cmdPath}/src/assets`;
   let targetFilePath = `${cmdPath}/src/assets.ts`;
+  if (isWindows) {
+    assetDicPath = assetDicPath.replace(/\//g, '\\');
+    targetFilePath = targetFilePath.replace(/\//g, '\\');
+  }
 
   let files = find(assetDicPath);
 
   let nameList = files.map((filePath) => {
     return filePath.substring(
-      filePath.lastIndexOf(/[/\\]/g) + 1,
+      filePath.lastIndexOf(/\\\//) + 1,
       filePath.length
     );
   });
@@ -89,7 +95,7 @@ async function makeTaro() {
   for (const oldName of nameList) {
     let dumpName = toHump(oldName.replace('.png', ''));
     importStr += `import ${dumpName} from './assets/${oldName}';\n`
-    if (os.type() == 'Windows_NT') {
+    if (isWindows) {
       exportStr += `  /** ![](${assetDicPath}\\${oldName}) */\n` + `  static ${dumpName} = ${dumpName};\n`
     } else {
       exportStr += `  /** ![](${assetDicPath}/${oldName}) */\n` + `  static ${dumpName} = ${dumpName};\n`
