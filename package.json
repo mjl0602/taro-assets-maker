@@ -1,6 +1,6 @@
 {
   "name": "taro-assets-maker",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Auto creat taro assets",
   "main": "index.js",
   "scripts": {

@@ -61,8 +61,8 @@ async function initTaro() {
   let gitignore = fs.readFileSync(`${cmdPath}/.gitignore`, {
     encoding: 'utf-8'
   });
-  if (gitignore.indexOf('\n./src/assets.ts\n') == -1) {
-    gitignore = gitignore + '\n\n# ignore generated assets file\n./src/assets.ts\n'
+  if (gitignore.indexOf('\nsrc/assets.ts\n') == -1) {
+    gitignore = gitignore + '\n\n# ignore generated assets file\nsrc/assets.ts\n'
     fs.writeFileSync(`${cmdPath}/.gitignore`, gitignore);
     console.log('.gitignore 添加完成')
   } else {
