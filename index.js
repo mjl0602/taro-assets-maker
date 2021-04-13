@@ -13,6 +13,7 @@ export default abstract class Assets {
 
 async function main(args) {
   // console.log("args", args);
+  isWindows = os.type() == 'Windows_NT';
   if (args[2] == "init") {
     console.log("初始化Taro项目结构\n");
     await initTaro();
@@ -31,7 +32,7 @@ async function main(args) {
 
 main(process.argv);
 
-let isWindows = os.type() == 'Windows_NT';
+let isWindows = false;
 
 
 async function initTaro() {
