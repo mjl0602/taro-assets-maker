@@ -9,6 +9,8 @@ export default abstract class Assets {
 // export here
 }`
 
+let isWindows = false;
+
 // 主函数
 
 async function main(args) {
@@ -31,9 +33,6 @@ async function main(args) {
 }
 
 main(process.argv);
-
-let isWindows = false;
-
 
 async function initTaro() {
   let cmdPath = process.cwd();
@@ -86,7 +85,7 @@ async function makeTaro() {
 
   let nameList = files.map((filePath) => {
     return filePath.substring(
-      filePath.lastIndexOf(/\\\//) + 1,
+      filePath.lastIndexOf(isWindows ? '\\' : '/') + 1,
       filePath.length
     );
   });
