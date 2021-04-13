@@ -61,11 +61,9 @@ async function initTaro() {
   let gitignore = fs.readFileSync(`${cmdPath}/.gitignore`, {
     encoding: 'utf-8'
   });
-  // console.log(gitignore);
-  if (gitignore.indexOf('\nIcon?\n') == -1) {
-    gitignore = gitignore + '\n\n# fmaker folder icon\n./src/assets.ts\n'
+  if (gitignore.indexOf('\n./src/assets.ts\n') == -1) {
+    gitignore = gitignore + '\n\n# ignore generated assets file\n./src/assets.ts\n'
     fs.writeFileSync(`${cmdPath}/.gitignore`, gitignore);
-    // console.log(gitignore);
     console.log('.gitignore 添加完成')
   } else {
     console.log('无需添加.gitignore')
