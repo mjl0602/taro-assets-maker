@@ -2,7 +2,7 @@
 
 let fs = require('fs');
 const join = require("path").join;
-
+const os = require('os');
 let tempStr = `
 // import here
 export default abstract class Assets {
@@ -79,7 +79,7 @@ async function makeTaro() {
 
   let nameList = files.map((filePath) => {
     return filePath.substring(
-      filePath.lastIndexOf(/[\\/]/g) + 1,
+      filePath.lastIndexOf(/[/\\]/g) + 1,
       filePath.length
     );
   });
@@ -89,7 +89,11 @@ async function makeTaro() {
   for (const oldName of nameList) {
     let dumpName = toHump(oldName.replace('.png', ''));
     importStr += `import ${dumpName} from './assets/${oldName}';\n`
-    exportStr += `  /** ![](${assetDicPath}/${oldName}) */\n` + `  static ${dumpName} = ${dumpName};\n`
+    if (os.type() == 'Windows_NT') {
+      exportStr += `  /** ![](${assetDicPath}\\${oldName}) */\n` + `  static ${dumpName} = ${dumpName};\n`
+    } else {
+      exportStr += `  /** ![](${assetDicPath}/${oldName}) */\n` + `  static ${dumpName} = ${dumpName};\n`
+    }
   }
   let content = tempStr;
   fs.writeFileSync(
