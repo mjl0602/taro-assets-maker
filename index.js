@@ -79,7 +79,7 @@ async function makeTaro() {
 
   let nameList = files.map((filePath) => {
     return filePath.substring(
-      filePath.lastIndexOf("/") + 1,
+      filePath.lastIndexOf(/[\\/]/g) + 1,
       filePath.length
     );
   });
