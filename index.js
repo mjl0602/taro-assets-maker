@@ -92,8 +92,11 @@ async function makeTaro() {
   console.log(`分析${nameList.length}个资源...`);
   let importStr = '';
   let exportStr = '';
+  // .png
   for (const oldName of nameList) {
-    let dumpName = toHump(oldName.replace('.png', ''));
+    if (oldName.indexOf('.') == 0) continue;
+    if (oldName.indexOf('.') < 0) continue;
+    let dumpName = toHump(oldName.replace(/(\.png)|(\.jpg)|(\.jpeg)/g, '').replace(/\W/g, ' '));
     importStr += `import ${dumpName} from './assets/${oldName}';\n`
     if (isWindows) {
       exportStr += `  /** ![](${assetDicPath}\\${oldName}) */\n` + `  static ${dumpName} = ${dumpName};\n`
